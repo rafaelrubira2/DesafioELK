@@ -1,0 +1,317 @@
+history
+    1  sudo su -
+    2  sudo systemctl status kibana
+    3  sudo systemctl start kibana
+    4  sudo systemctl status kibana
+    5  sudo systemctl status elasticsearch
+    6  curl localhost:9200
+    7  sudo apt-get install curl
+    8  curl localhost:9200
+    9  sudo systemctl status kibana
+   10  sudo systemctl status elasticsearch
+   11  sudo systemctl start elasticsearch
+   12  sudo systemctl status elasticsearch
+   13  sudo curl localhost:9200
+   14  clear
+   15  curl -XGET 'http://localhost:9200'
+   16  curl -X GET "http://10.0.2.15:9200"
+   17  ip a
+   18  clear
+   19  curl -X GET "http://192.168.0.87:9200"
+   20  shutdown -r 0
+   21  pwd
+   22  sudo cp /root/instalacaoELK .
+   23  ls
+   24  curl systemctl localhost:9200
+   25  curl localhost:9200
+   26  sudo curl localhost:9200
+   27  systemctl start elasticsearch
+   28  sudo curl loalhost:9200
+   29  sudo curl localhost:9200
+   30  systemctl restart elasticsearch
+   31  sudo systemctl status elasticsearch
+   32  sudo su -
+   33  sudo su 0
+   34  sudo su -
+   35  sudo systemctl status elasticsearch
+   36  sudo systemctl start elasticsearch
+   37  sudo systemctl status elasticsearch
+   38  sudo curl loalhost:9200
+   39  sudo curl localhost:9200
+   40  ip a
+   41  sudo curl 192.168.0.87:9200
+   42  sudo curl -X GET 192.168.0.87:9200
+   43  sudo systemctl status elasticsearch
+   44  sudo su -
+   45  sudo systemctl status elasticserach
+   46  sudo nano /etc/elasticsearch/elasticsearch.yml
+   47  curl localhost:9200
+   48  sudo nano /etc/kibana/kibana.yml
+   49  sudo systemctl restart kibana
+   50  sudo nano /etc/kibana/kibana.yml
+   51  sudo systemctl status kibana
+   52  sudo systemctl enable kibana
+   53  sudo systemctl start kibana
+   54  shutdown -h 0
+   55  cd Downloads
+   56  ls -la
+   57  cat lead.sh
+   58  cat load.sh
+   59  cat web.log
+   60  ls -la
+   61  chmod +x load.sh
+   62  ls -la
+   63  vim load.sh
+   64  vim web-logs-template.json 
+   65  ./load.sh
+   66  vim web-logs-logstash.conf 
+   67  sudo /usr/share/logstash/bin/logstash -f web-logs-logstash.conf < web.log
+   68  sudo systemctl status elasticserach
+   69  sudo systemctl start elasticsearch
+   70  sudo systemctl status elasticserach
+   71  sudo /usr/share/logstash/bin/logstash -f web-logs-logstash.conf < web.log
+   72  sudo systemctl start elasticsearch
+   73  sudo systemctl status elasticserach
+   74  sudo systemctl status elasticsearch
+   75  sudo /usr/share/logstash/bin/logstash -f web-logs-logstash.conf < web.log
+   76  exit
+   77  sudo systemctl status kibana
+   78  sudo shutdown -h 0
+   79  sudo systemctl status elasticsearch
+   80  sudo systemctl status filebeat
+   81  sudo systemctl start filebeat
+   82  sudo apt-get update
+   83  sudo apt-get install nginx
+   84  nginx -v
+   85  sudo systemctl status nginx
+   86  sudo mkdir -p /var/www/elastic-stack-server
+   87  ls -la
+   88  cd Downloads
+   89  ls -la
+   90  cp elastic.zip \var\www
+   91  cp elastic.zip /var/www
+   92  sudo cp elastic.zip /var/www
+   93  cd /var/www
+   94  ls -la
+   95  unzip elastic.zip
+   96  sudo unzip elastic.zip
+   97  sudo su -
+   98  sudo vim /etc/filebeat/filebeat.yml
+   99  sudo filebeat modules enable nginx
+  100  sudo vim /etc/filebeat/modules.d/nginx.yml
+  101  sudo ls -l /etc/filebeat/modules.d/
+  102  sudo filebeat setup -e
+  103  sudo systemctl start filebeat
+  104  sudo systemctl status filebeat
+  105  sudo systemctl status nginx
+  106  sudo systemctl restart nginx
+  107  sudo nano /etc/filebeat/modules.d/nginx.yml
+  108  sudo ls -l /etc/filebeat/modules.d/
+  109  sudo vim /etc/filebeat/filebeat.yml
+  110  vim /etc/nginx/sites-enabled/default
+  111  cd ..
+  112  ls -la
+  113  cd home
+  114  ls -la
+  115  cd ..
+  116  cd home
+  117  cd ..
+  118  cd usr
+  119  ls -la
+  120  cd ..
+  121  sudo systemctl status elastic
+  122  sudo systemctl status elasticsearch
+  123  sudo systemctl status filebeat
+  124  sudo vim  /etc/filebeat/filebeat.yml
+  125  cd /etc/filebeat/modules.d/
+  126  ls -la
+  127  sudo vim nginx.yml
+  128  sudo filebeat setup -e
+  129  sudo systemctl status filebeat
+  130  sudo systemctl restart filebeat
+  131  sudo systemctl status filebeat
+  132  exit
+  133  ls -la
+  134  cd Downloads
+  135  ls -la
+  136  mkdir Aula4
+  137  cd Aula 4
+  138  cd "Aula 4"
+  139  ls -la
+  140  cd aula4
+  141  cd Aula4
+  142  ls -la
+  143  sudo vim pipeline1.yml
+  144  echo 'Olá Pessoal!' | sudo /usr/share/logstash/bin/logstash -f pipeline1.yml
+  145  ls -la
+  146  echo 'Olá Pessoal!' | sudo /usr/share/logstash/bin/logstash -f pipeline1.yml
+  147  ls -la /usr/share/logstash/jdk
+  148  ls -la /usr/share/logstash
+  149  cd Aula4
+  150  sudo systemctl status elasticsearcj
+  151  sudo systemctl status elasticsearch
+  152  sudo systemctl status logstash
+  153  sudo systemctl status kibana
+  154  sudo systemctl status nginx
+  155  sudo systemctl status filebeat
+  156  sudo vim /etc/filebeat/filebeat.yml
+  157  sudo systemctl start filebeat
+  158  sudo systemctl status filebeat
+  159  sudo /usr/share/logstash/bin/logstash -f logstash-filebeat-1.conf
+  160  sudo apt-get install pip
+  161  sudo pip install Fake
+  162  cd..
+  163  cd ..
+  164  cd Desafio
+  165  python3 app.py
+  166  sudo pip install Fake
+  167  python3 app.py
+  168  sudo pip install faker
+  169  python3 app.py
+  170  exit
+  171  cd Downloads
+  172  cd Desafio
+  173  ls -la
+  174  systemctl status logstash
+  175  systemctl start logstash
+  176  systemctl status logstash
+  177  systemctl status elasticsearch
+  178  systemctl status kibana
+  179  ls -la
+  180  vim logstash-desafio.conf
+  181  sudo /usr/share/logstash/bin/logstash -f logstash-desafio.conf
+  182  systemctl status kibana
+  183  systemctl status elasticsearch
+  184  systemctl start elasticsearch
+  185  systemctl status elasticsearch
+  186  sudo systemctl status logstash
+  187  sudo /usr/share/logstash/bin/logstash -f logstash-desafio.conf
+  188  vim logstash-desafio.conf
+  189  sudo /usr/share/logstash/bin/logstash -f logstash-desafio.conf
+  190  sudo systemctl status logstash
+  191  sudo systemctl status elasticsearch
+  192  vim logstash-desafio.conf
+  193  ls -la
+  194  git config --global user.name "Rafael Peres Rubira"
+  195  git config --global user.email rafaelrubira2@gmail.com
+  196  git config --global core.autocrlf false
+  197  git config --global core.filemode false
+  198  git config --global color.ui true
+  199  git init
+  200  git add *
+  201  git status
+  202  git commit -a -m "DesafioELK"
+  203  git branch
+  204  git push master master
+  205  git push master
+  206  git push main
+  207  git push main master
+  208  git push master main
+  209  git push main
+  210  git push origin main
+  211  git push origin master
+  212  git push --force origin main
+  213  git checkout main
+  214  git status
+  215  git log
+  216  git push head master
+  217  git push origin master
+  218  git diff
+  219  git remote -v
+  220  git branch -M main
+  221  git branch
+  222  git remote add origin git@github.com:rafaelrubira2/DesafioELK.git
+  223  git push -u origin main
+  224  git status
+  225  git log
+  226  git remote add origin http://github.com/rafaelrubira2/DesafioELK.git
+  227  git push -u origin main
+  228  git remote -v
+  229  git remote rm
+  230  git remote rm DesafioELK.git
+  231  git remote rm origin
+  232  git remote -v
+  233  git remote add origin https://github.com/rafaelrubira2/DesafioELK.git
+  234  git push -u origin main
+  235  git remote rm origin
+  236  git remote add origin git@github.com:rafaelrubira2/DesafioELK.git
+  237  cd ..
+  238  ls -la
+  239  cd .ssh
+  240  ls -la
+  241  curl https://github.com/rafaelrubira2.keys>>authorized_keys
+  242  ls -la
+  243  cd ..
+  244  cd Downloads
+  245  cd Desafio
+  246  git remote add origin git@github.com:rafaelrubira2/DesafioELK.git
+  247  git push -u origin main
+  248  ls -la
+  249  git commit
+  250  git log
+  251  git status
+  252  git remote
+  253  git remote add origin git@github.com:rafaelrubira2/DesafioELK.gitssh -vT git@github.com
+  254  ssh -vT git@github.com
+  255  cd .ssh
+  256  cd ../../.ssh
+  257  ls -la
+  258  echo "" >> authorized_keys 
+  259  cat authorized_keys 
+  260  echo "" > authorized_keys 
+  261  cat authorized_keys 
+  262  cd ..
+  263  cd Downloads
+  264  cd Desafio
+  265  ls -la
+  266  curl https://github.com/rafaelrubira2.keys>>authorized_keys
+  267  ls -la
+  268  rm authorized_keys 
+  269  ls -la
+  270  cd ../../.ssh
+  271  ls -la
+  272  curl https://github.com/rafaelrubira2.keys>>authorized_keys
+  273  cat authorized_keys 
+  274  cd ../Downloads
+  275  ls -la
+  276  cp id_ed25519 ../.ssh
+  277  cd Desafio
+  278  ssh -vT git@github.com
+  279  cd ../../.ssh
+  280  ls -la
+  281  sudo chmod 600 id_ed25519
+  282  cd ../Downloads/Desafio
+  283  ls -la
+  284  ssh -vT git@github.com
+  285  git push -u origin main
+  286  ls -la
+  287  exit
+  288  cp /etc/filebeat/filebeat.yml ~/Downloads/Desafio
+  289  sudo cp /etc/filebeat/filebeat.yml ~/Downloads/Desafio
+  290  sudo systemctl restart filebeat
+  291  sudo systemctl restart filebeat.service
+  292  sudo systemctl status filebeat.service
+  293  ls -la
+  294  cd Downloads/Desafio
+  295  ls -la
+  296  cat app.py
+  297  history
+  298  sudo /usr/share/logstash/bin/logstash -f logstash-desafio.conf
+  299  sudo vim /etc/filebeat/filebeat.yml
+  300  sudo cp /etc/filebeat/filebeat.yml ~/Downloads/Desafio
+  301  sudo /usr/share/logstash/bin/logstash -f logstash-desafio.conf
+  302  history
+  303  git commit -a -m "DesafioELK_ajustes"
+  304  git status
+  305  git add filebeat.yml
+  306  sudo git add filebeat.yml
+  307  ls -la
+  308  git status
+  309  git commit -a -m "DesafioELK_ajustes2"
+  310  git push -u origin main
+  311  exit
+  312  cd Downloads
+  313  cd Desafio
+  314  echo history >> history.txt
+  315  cat history.txt
+  316  history >> history.txt
