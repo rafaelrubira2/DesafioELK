@@ -344,16 +344,826 @@ GET app/_search
 
 4) A média salarial por departamento
 
+GET app/_search
+{
+  "size":0,
+	"aggs": {
+        "group_by_category": {
+          "terms": {
+              "field": "depto.keyword"
+          },
+          "aggs": {
+            "average_amount": {
+              "avg": {
+                "field": "salario"
+              }
+            }
+          }
+        }
+	}
+}
+
+----------
+
+{
+  "took" : 202,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 258,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
+  },
+  "aggregations" : {
+    "group_by_category" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : "RH",
+          "doc_count" : 74,
+          "average_amount" : {
+            "value" : 5301.956966915646
+          }
+        },
+        {
+          "key" : "Financeiro",
+          "doc_count" : 73,
+          "average_amount" : {
+            "value" : 5991.740170831549
+          }
+        },
+        {
+          "key" : "Marketing",
+          "doc_count" : 60,
+          "average_amount" : {
+            "value" : 5770.653920491536
+          }
+        },
+        {
+          "key" : "TI",
+          "doc_count" : 46,
+          "average_amount" : {
+            "value" : 5990.7877197265625
+          }
+        }
+      ]
+    }
+  }
+}
 
 
 -------------------------------------------------------------
 
 5) Qual foi o nome, email e cargo das pessoas da região Sul que não trabalham no RH e TI.
 
+GET app/_search
+{
+  "_source": [
+    "nome",
+    "email",         
+    "ocupacao"
+  ],
+  "query": {
+    "bool": {
+      "should" : [
+        { "match" : { "UF" : "PR" } },
+        { "match" : { "UF" : "SC" } },
+        { "match" : { "UF" : "RS" } }
+      ],
+      "must_not": [
+        {
+          "bool": {
+            "filter": [
+              {
+                "term": {
+                  "depto.keyword": "RH"
+                }
+              },
+              {
+                "term": {
+                 "depto.keyword": "TI"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
+
+-------------------
+
+{
+  "took" : 9,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 18,
+      "relation" : "eq"
+    },
+    "max_score" : 4.337802,
+    "hits" : [
+      {
+        "_index" : "app",
+        "_id" : "_5BrOIYB-F4Qrcc3-vxS",
+        "_score" : 4.337802,
+        "_source" : {
+          "ocupacao" : "Engenheiro acústico",
+          "nome" : [
+            "Ana",
+            "Lívia",
+            "Porto"
+          ],
+          "email" : [
+            "zdias",
+            "example.org"
+          ]
+        }
+      },
+      {
+        "_index" : "app",
+        "_id" : "XZBrOIYB-F4Qrcc3-_1E",
+        "_score" : 4.337802,
+        "_source" : {
+          "ocupacao" : "Assistente de produção",
+          "nome" : [
+            "Marina",
+            "Araújo"
+          ],
+          "email" : [
+            "lfogaca",
+            "example.net"
+          ]
+        }
+      },
+      {
+        "_index" : "app",
+        "_id" : "dJBvOIYB-F4Qrcc3gP3G",
+        "_score" : 4.337802,
+        "_source" : {
+          "ocupacao" : "Técnico em radiologia",
+          "nome" : [
+            "Isadora",
+            "Azevedo"
+          ],
+          "email" : [
+            "joao-miguel94",
+            "example.net"
+          ]
+        }
+      },
+      {
+        "_index" : "app",
+        "_id" : "AZBrOIYB-F4Qrcc3-v1S",
+        "_score" : 3.8822737,
+        "_source" : {
+          "ocupacao" : "Engenheiro de transportes",
+          "nome" : [
+            "Lorenzo",
+            "Monteiro"
+          ],
+          "email" : [
+            "limaryan",
+            "example.com"
+          ]
+        }
+      },
+      {
+        "_index" : "app",
+        "_id" : "BpBrOIYB-F4Qrcc3-v1S",
+        "_score" : 3.8822737,
+        "_source" : {
+          "ocupacao" : "Acupunturista",
+          "nome" : [
+            "Joana",
+            "Ramos"
+          ],
+          "email" : [
+            "ubarros",
+            "example.net"
+          ]
+        }
+      },
+      {
+        "_index" : "app",
+        "_id" : "W5BrOIYB-F4Qrcc3-_1E",
+        "_score" : 3.8822737,
+        "_source" : {
+          "ocupacao" : "Policial civil",
+          "nome" : [
+            "Vicente",
+            "Duarte"
+          ],
+          "email" : [
+            "correiamilena",
+            "example.org"
+          ]
+        }
+      },
+      {
+        "_index" : "app",
+        "_id" : "aZBrOIYB-F4Qrcc3-_1E",
+        "_score" : 3.8822737,
+        "_source" : {
+          "ocupacao" : "Engenheiro de processos",
+          "nome" : [
+            "Lívia",
+            "Barbosa"
+          ],
+          "email" : [
+            "davi-lucas61",
+            "example.org"
+          ]
+        }
+      },
+      {
+        "_index" : "app",
+        "_id" : "mpBvOIYB-F4Qrcc3gf1T",
+        "_score" : 3.8822737,
+        "_source" : {
+          "ocupacao" : "Tecnólogo em irrigação e drenagem",
+          "nome" : [
+            "Camila",
+            "Viana"
+          ],
+          "email" : [
+            "isaac07",
+            "example.com"
+          ]
+        }
+      },
+      {
+        "_index" : "app",
+        "_id" : "75BrOIYB-F4Qrcc3-fzb",
+        "_score" : 3.2305782,
+        "_source" : {
+          "ocupacao" : "Diretor de fotografia",
+          "nome" : [
+            "Raul",
+            "Costa"
+          ],
+          "email" : [
+            "marcos-viniciusda-mota",
+            "example.com"
+          ]
+        }
+      },
+      {
+        "_index" : "app",
+        "_id" : "9pBrOIYB-F4Qrcc3-fzb",
+        "_score" : 3.2305782,
+        "_source" : {
+          "ocupacao" : "Construtor",
+          "nome" : [
+            "Bruno",
+            "Sales"
+          ],
+          "email" : [
+            "da-conceicaoanthony",
+            "example.com"
+          ]
+        }
+      }
+    ]
+  }
+}
+
+
 -------------------------------------------------------------
 
 6) Considerando que a cotação do dólar é R$ 5.10, repetir o item 5.2.4 em dólar.
 
+GET app/_search
+{
+  "size":0,
+  "runtime_mappings": {
+    "price.dolar": {
+      "type": "double",
+      "script": {
+        "source": """
+          emit(doc['salario'].value * params.conversion_rate)
+        """,
+        "params": {
+          "conversion_rate": 5.10
+        }
+      }
+    }
+  },
+	"aggs": {
+        "group_by_category": {
+          "terms": {
+              "field": "depto.keyword"
+          },
+          "aggs": {
+            "average_amount": {
+              "avg": {
+                "field": "price.dolar"
+              }
+            }
+          }
+        }
+	}
+}
+
+-----------------------
+
+{
+  "took" : 116,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 1,
+    "successful" : 1,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 258,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [ ]
+  },
+  "aggregations" : {
+    "group_by_category" : {
+      "doc_count_error_upper_bound" : 0,
+      "sum_other_doc_count" : 0,
+      "buckets" : [
+        {
+          "key" : "RH",
+          "doc_count" : 74,
+          "average_amount" : {
+            "value" : 27039.980531269794
+          }
+        },
+        {
+          "key" : "Financeiro",
+          "doc_count" : 73,
+          "average_amount" : {
+            "value" : 30557.874871240903
+          }
+        },
+        {
+          "key" : "Marketing",
+          "doc_count" : 60,
+          "average_amount" : {
+            "value" : 29430.334994506837
+          }
+        },
+        {
+          "key" : "TI",
+          "doc_count" : 46,
+          "average_amount" : {
+            "value" : 30553.017370605467
+          }
+        }
+      ]
+    }
+  }
+}
+
+
 -------------------------------------------------------------
 
 7) Mostrar um relatório contendo a quantidade de documentos gerados por minuto dos colaboradores de TI.
+
+:(
+
+GET app/_search
+{
+  "aggs": {
+    "Trafego por minuto": {
+      "date_histogram": {
+        "field": "@timestamp",
+        "interval": "hour"
+      },
+      "aggs": {
+        "Nr documentos": {
+          "value_count": {
+            "depto.keyword": "TI"
+          }
+        }
+      }
+    }
+  }, 
+  "query": {
+      "bool": {
+        "must": [
+        {
+          "term": {
+                "depto.keyword": "TI"
+          }
+        }
+        ]
+      }
+  }
+}
+
+
+-------------------------------------------------------------------------------
+
+logstash-desafio.conf
+
+input {
+    #file {
+	#	path => "/home/elk/Downloads/Desafio/app.log"
+	#	start_position => "beginning"
+	#	sincedb_clean_after => "1 s"
+	#}
+	beats {
+        port => 5044
+    }
+}
+
+filter {
+	csv {
+        skip_header => true
+        separator => ";"
+        columns => ["nome","endereco","ocupacao","depto","email","salario"]
+    }
+    
+    mutate {
+        split => { "email" => "@" }
+        add_field => { "id" => "%{[email][0]}" }
+    }
+    
+    mutate {
+        split => { "endereco" => "/" }
+        add_field => { "UF" => "%{[endereco][-1]}" }
+    }
+    
+    mutate {
+    	strip => ["UF"]
+    	join => { "endereco" => "-" }
+     	add_field => { "autor" => "Rafael Peres Rubira"}
+        remove_field => ["host", "@version", "message", "path", "agent"]
+    }
+    
+    mutate {
+        split => { "nome" => " " }
+    }
+	
+	if "." in [nome][0] {
+		mutate {
+			add_field => { "primeironome" => "%{[nome][1]}"} 
+		}
+	}
+	else
+	{
+		mutate {
+			add_field => { "primeironome" => "%{[nome][0]}"} 
+		}
+	}
+	
+	mutate {
+     	add_field => { "sobrenome" => "%{[nome][-1]}"}
+     	convert => { "salario" => "float"}
+    }
+	
+	
+
+}
+
+output {
+    stdout {}
+    
+    elasticsearch {
+        hosts => "http://127.0.0.1:9200"
+        user => "elk"
+        password => "elk"
+        index => "app"
+        action => "index"
+    }
+}
+
+----------------------------------------------------------------------------------
+
+###################### Filebeat Configuration Example #########################
+
+# This file is an example configuration file highlighting only the most common
+# options. The filebeat.reference.yml file from the same directory contains all the
+# supported options with more comments. You can use it as a reference.
+#
+# You can find the full configuration reference here:
+# https://www.elastic.co/guide/en/beats/filebeat/index.html
+
+# For more available modules and options, please see the filebeat.reference.yml sample
+# configuration file.
+
+# ============================== Filebeat inputs ===============================
+
+filebeat.inputs:
+
+# Each - is an input. Most options can be set at the input level, so
+# you can use different inputs for various configurations.
+# Below are the input specific configurations.
+
+# filestream is an input for collecting log messages from files.
+- type: log
+
+  # Change to true to enable this input configuration.
+  enabled: true
+
+  # Paths that should be crawled and fetched. Glob based paths.
+  paths:
+  - /home/elk/Downloads/Desafio/app.log
+      #- /var/log/nginx/access.log
+    #- c:\programdata\elasticsearch\logs\*
+
+  # Exclude lines. A list of regular expressions to match. It drops the lines that are
+  # matching any regular expression from the list.
+  #exclude_lines: ['^DBG']
+
+  # Include lines. A list of regular expressions to match. It exports the lines that are
+  # matching any regular expression from the list.
+  #include_lines: ['^ERR', '^WARN']
+
+  # Exclude files. A list of regular expressions to match. Filebeat drops the files that
+  # are matching any regular expression from the list. By default, no files are dropped.
+  #prospector.scanner.exclude_files: ['.gz$']
+
+  # Optional additional fields. These fields can be freely picked
+  # to add additional information to the crawled log files for filtering
+  #fields:
+  #  level: debug
+  #  review: 1
+
+# ============================== Filebeat modules ==============================
+
+    #filebeat.config.modules:
+  # Glob pattern for configuration loading
+  #path: ${path.config}/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  #reload.enabled: false
+
+  # Period on which files under path should be checked for changes
+  #reload.period: 10s
+
+# ======================= Elasticsearch template setting =======================
+
+setup.template.settings:
+  index.number_of_shards: 1
+  #index.codec: best_compression
+  #_source.enabled: false
+
+
+# ================================== General ===================================
+
+# The name of the shipper that publishes the network data. It can be used to group
+# all the transactions sent by a single shipper in the web interface.
+#name:
+
+# The tags of the shipper are included in their own field with each
+# transaction published.
+#tags: ["service-X", "web-tier"]
+
+# Optional fields that you can specify to add additional information to the
+# output.
+#fields:
+#  env: staging
+
+# ================================= Dashboards =================================
+# These settings control loading the sample dashboards to the Kibana index. Loading
+# the dashboards is disabled by default and can be enabled either by setting the
+# options here or by using the `setup` command.
+#setup.dashboards.enabled: false
+
+# The URL from where to download the dashboards archive. By default this URL
+# has a value which is computed based on the Beat name and version. For released
+# versions, this URL points to the dashboard archive on the artifacts.elastic.co
+# website.
+#setup.dashboards.url:
+
+# =================================== Kibana ===================================
+
+# Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
+# This requires a Kibana endpoint configuration.
+setup.kibana:
+
+  # Kibana Host
+  # Scheme and port can be left out and will be set to the default (http and 5601)
+  # In case you specify and additional path, the scheme is required: http://localhost:5601/path
+  # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
+  #host: "localhost:5601"
+
+  # Kibana Space ID
+  # ID of the Kibana Space into which the dashboards should be loaded. By default,
+  # the Default Space will be used.
+  #space.id:
+
+# =============================== Elastic Cloud ================================
+
+# These settings simplify using Filebeat with the Elastic Cloud (https://cloud.elastic.co/).
+
+# The cloud.id setting overwrites the `output.elasticsearch.hosts` and
+# `setup.kibana.host` options.
+# You can find the `cloud.id` in the Elastic Cloud web UI.
+#cloud.id:
+
+# The cloud.auth setting overwrites the `output.elasticsearch.username` and
+# `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
+#cloud.auth:
+
+# ================================== Outputs ===================================
+
+# Configure what output to use when sending the data collected by the beat.
+
+# ---------------------------- Elasticsearch Output ----------------------------
+#output.elasticsearch:
+  # Array of hosts to connect to.
+  #hosts: ["127.0.0.1:9200"]
+
+  # Protocol - either `http` (default) or `https`.
+  #protocol: "https"
+
+  # Authentication credentials - either API key or username/password.
+  #api_key: "id:api_key"
+  #username: "elk"
+  #password: "elk"
+
+# ------------------------------ Logstash Output -------------------------------
+output.logstash:
+  # The Logstash hosts
+  hosts: ["127.0.0.1:5044"]
+
+  # Optional SSL. By default is off.
+  # List of root certificates for HTTPS server verifications
+  #ssl.certificate_authorities: ["/etc/pki/root/ca.pem"]
+
+  # Certificate for SSL client authentication
+  #ssl.certificate: "/etc/pki/client/cert.pem"
+
+  # Client Certificate Key
+  #ssl.key: "/etc/pki/client/cert.key"
+
+# ================================= Processors =================================
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
+
+# ================================== Logging ===================================
+
+# Sets log level. The default log level is info.
+# Available log levels are: error, warning, info, debug
+#logging.level: debug
+
+# At debug level, you can selectively enable logging only for some components.
+# To enable all selectors use ["*"]. Examples of other selectors are "beat",
+# "publisher", "service".
+#logging.selectors: ["*"]
+
+# ============================= X-Pack Monitoring ==============================
+# Filebeat can export internal metrics to a central Elasticsearch monitoring
+# cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The
+# reporting is disabled by default.
+
+# Set to true to enable the monitoring reporter.
+#monitoring.enabled: false
+
+# Sets the UUID of the Elasticsearch cluster under which monitoring data for this
+# Filebeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
+# is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
+#monitoring.cluster_uuid:
+
+# Uncomment to send the metrics to Elasticsearch. Most settings from the
+# Elasticsearch output are accepted here as well.
+# Note that the settings should point to your Elasticsearch *monitoring* cluster.
+# Any setting that is not set is automatically inherited from the Elasticsearch
+# output configuration, so if you have the Elasticsearch output configured such
+# that it is pointing to your Elasticsearch monitoring cluster, you can simply
+# uncomment the following line.
+#monitoring.elasticsearch:
+
+# ============================== Instrumentation ===============================
+
+# Instrumentation support for the filebeat.
+#instrumentation:
+    # Set to true to enable instrumentation of filebeat.
+    #enabled: false
+
+    # Environment in which filebeat is running on (eg: staging, production, etc.)
+    #environment: ""
+
+    # APM Server hosts to report instrumentation results to.
+    #hosts:
+    #  - http://localhost:8200
+
+    # API Key for the APM Server(s).
+    # If api_key is set then secret_token will be ignored.
+    #api_key:
+
+    # Secret token for the APM Server(s).
+    #secret_token:
+
+
+# ================================= Migration ==================================
+
+# This allows to enable 6.7 migration aliases
+#migration.6_to_7.enabled: true
+
+seccomp.enabled: true
+seccomp:
+  default_action: allow
+
+
+---------------------------------------------------------------------------------
+
+app.log
+
+nome;endereco;ocupacao;depto;email;salario
+Isadora Azevedo;Passarela Maria Eduarda da Cruz, 18,João Pinheiro,70141-776 Souza de da Costa / RS;Técnico em radiologia;Marketing;joao-miguel94@example.net;3931.2464466275405
+Luiza Santos;Chácara Daniela Farias, 660,Conjunto Floramar,15263-707 Araújo / RR;Jogador de boliche;Marketing;natalia86@example.net;3283.457153674194
+Dr. Levi Ferreira;Trecho Yuri Oliveira, 1,Granja De Freitas,08309-435 Martins / PA;Cancerologista ou Oncologista;RH;bmoura@example.org;4979.708506789738
+Sra. Julia da Rocha;Avenida de Moura, 97,Vila Barragem Santa Lúcia,50966-175 Nunes / PB;Biomédico;TI;souzaana-clara@example.com;8079.376944786482
+Eduarda Teixeira;Residencial Carvalho, 10,Granja De Freitas,85975375 Jesus das Pedras / PA;Clínico geral;RH;nteixeira@example.net;7030.172596740308
+Joana Carvalho;Vila Rafael Martins, 25,Nova America,11261845 Farias do Galho / PE;Urologista;RH;leonardo02@example.com;7519.49542792508
+Enzo Gabriel Azevedo;Rodovia de Santos,Mariquinhas,82652-055 Fernandes / BA;Embalador;Marketing;csouza@example.net;8295.630475354308
+Isabel Jesus;Núcleo de Araújo, 167,São Francisco Das Chagas,89174-337 Jesus / ES;Engenheiro de minas;Financeiro;scunha@example.com;6430.047803219422
+Ryan Nogueira;Colônia Costa, 16,Custodinha,66860040 Costela / RJ;Urbanista;RH;kamillynascimento@example.net;7192.084644752299
+Dra. Fernanda da Mata;Ladeira de Costela, 27,Marilandia,75671186 Correia / PB;Bóia-fria;RH;brunamendes@example.net;1375.3418583704085
+Thiago Ribeiro;Fazenda Maria Julia Rocha, 43,Solimoes,83924-253 Farias das Pedras / BA;Construtor;RH;emanuel88@example.net;6764.4439449415295
+Marina Carvalho;Núcleo Breno da Rocha,Estoril,08074006 Moura da Praia / PA;Traumatologista;Financeiro;luiz-gustavo19@example.com;3076.398008342836
+Emilly Barros;Favela de Barros, 93,Miramar,48751-442 Moraes / PA;Gastrônomo;Marketing;brenoalves@example.org;8819.719629930933
+Nina Porto;Feira Cecília Barros, 8,Vila Barragem Santa Lúcia,34334-946 Alves de da Costa / RJ;Fresador;TI;freitasmariane@example.com;7470.177642217986
+Raul Barros;Pátio de da Mota, 54,Carlos Prates,30933356 Freitas / RR;Recepcionista;Marketing;nascimentokevin@example.com;5128.713979632947
+Otávio Cunha;Loteamento Lorenzo Cardoso,São João,69927025 Lima de Jesus / GO;Fisioterapeuta;RH;imonteiro@example.org;3917.5999119612416
+Sr. Rodrigo Viana;Chácara Ribeiro, 5,Flavio De Oliveira,10516760 Cardoso / PI;Marcador de luz;RH;mendesmanuela@example.org;5013.6095785784055
+Sr. Rafael Correia;Vila de Viana, 9,Vila Atila De Paiva,30744-825 Azevedo da Prata / MT;Nefrologista;Financeiro;fernandesclara@example.org;6991.514417275102
+Benjamin Rezende;Setor Nathan da Costa, 22,Conjunto Santa Maria,70202-554 Cunha / PB;Comandante;Marketing;fcaldeira@example.net;8444.172447100174
+Camila Viana;Residencial Laís Almeida, 37,Goiania,78544169 Duarte das Flores / PR;Tecnólogo em irrigação e drenagem;Marketing;isaac07@example.com;6026.246624703504
+Luiz Fernando Cardoso;Colônia Peixoto, 60,Mariquinhas,85476737 Lima / PE;Intérprete e tradutor de língua de sinais;Marketing;vieirayasmin@example.org;2572.5193774637046
+Heloísa Ribeiro;Campo Sales, 86,Conjunto São Francisco De Assis,12393-797 Correia / SP;Mergulhador;Marketing;xcostela@example.com;7425.461552188485
+Gabrielly Fogaça;Condomínio Vicente Martins, 87,Planalto,47086087 Almeida / PA;Veterinário;RH;maria-fernandaviana@example.com;2581.651641349893
+Bianca Rodrigues;Jardim das Neves, 30,Túnel De Ibirité,60699-155 Moraes Paulista / RN;Oficial de justiça;RH;otaviosouza@example.net;1467.110559516457
+Stella Costa;Sítio de Teixeira, 48,Maravilha,03431-492 Cardoso / RR;Cineasta;RH;ana57@example.org;8714.496466115488
+Sr. Heitor Barros;Jardim Moura, 88,Parque São José,53964-525 Mendes / PA;Assistente social;Financeiro;alvesmarina@example.net;8689.677144964407
+Bryan Araújo;Setor Ferreira, 6,Xodo-Marize,23187365 Gomes da Mata / RJ;Secretária;Financeiro;da-conceicaomaria-alice@example.net;1514.0830772614538
+Renan Costa;Favela Costela, 27,Bonfim,47371069 da Mota / ES;Gastrônomo;Financeiro;maria-fernandanogueira@example.com;5359.999581843382
+Bernardo Aragão;Vereda Carvalho,Vila Da Luz,24833-080 Souza / DF;Profissional de recursos humanos;TI;antonio51@example.org;4287.669773604941
+João Lucas Azevedo;Quadra Marina da Rosa, 3,Novo Santa Cecilia,64803-188 Oliveira de Goiás / PE;Tecnólogo em navegação fluvial;TI;salesantonio@example.com;6176.315196554749
+Luiz Felipe Nascimento;Área de Araújo, 35,Serra,23308721 da Cruz / RJ;Levantador de peso;Financeiro;nicolasda-cruz@example.org;7928.289862891664
+Sabrina Moura;Travessa Pietro Novaes, 58,Santo André,08575634 Almeida da Serra / MT;Historiador;Financeiro;hcunha@example.net;4908.650448470555
+Nicole Ferreira;Estação Ana Vitória da Rosa, 23,Vila Aeroporto,00033972 Vieira / MG;Implantodontista;Financeiro;emanuelly81@example.net;5199.344783776156
+Ana Luiza Farias;Quadra Freitas, 98,Novo Aarão Reis,86876-266 Almeida dos Dourados / PB;Dublador;RH;vitorazevedo@example.org;8125.979574183003
+Lívia da Mota;Trevo de Campos, 84,Canaa,89961552 Gonçalves / SE;Frentista;RH;joao43@example.org;1462.4498690713356
+Mariana Moreira;Estação Bruno Silva, 73,Vila Sesc,90649-104 Vieira / RN;Cinematográfo;RH;ana-livia14@example.com;4626.630822189363
+Ana Beatriz Ramos;Esplanada de Cunha, 30,Conjunto Celso Machado,90114384 Moraes das Pedras / PI;Sapateiro;Marketing;silveirajoana@example.org;3156.912020022818
+Heloísa Farias;Morro Castro, 31,Vila De Sá,36933328 Fogaça das Pedras / AC;Implantodontista;Financeiro;rocharebeca@example.net;5360.118852158643
+Dr. Lucas Nogueira;Setor Ana Luiza Pinto, 19,Tres Marias,10778363 Correia do Sul / SC;Engenheiro agrícola;TI;da-motamaria-alice@example.com;2160.884487332513
+Camila Araújo;Viaduto Farias,Jardinópolis,37194-044 Barros de Monteiro / CE;Adestrador de animais;RH;diogocunha@example.org;2798.2708029561463
+Pedro Almeida;Trevo Viana, 77,Jardim América,41311-318 Nogueira / SC;Clarinetista;RH;apeixoto@example.com;1612.7212094050924
+Sra. Maria Sophia Silva;Loteamento Farias, 47,Mala E Cuia,08749-976 Moreira / RN;Agente funerário;RH;emanuellyalves@example.org;6725.170213973627
+Lorena Gomes;Conjunto de Santos, 484,Nossa Senhora Do Rosário,31108-189 Teixeira de Goiás / PA;Sapateiro;TI;correiaaugusto@example.org;5395.275779140432
+Isabella Barros;Distrito João Lucas Santos, 924,Ermelinda,06556367 Rodrigues das Flores / PB;Anestesiologista;Financeiro;bmoraes@example.net;4467.4113262975625
+Dra. Sophia Fernandes;Lagoa Porto, 84,Carlos Prates,36720592 Caldeira das Flores / DF;Lixeiro/Coletor de lixo;Marketing;clara75@example.com;6976.28898260774
+Sra. Alice Carvalho;Estação da Paz, 813,Jardim Dos Comerciarios,41435255 Sales / PB;Tecnólogo em silvicultura;RH;fogacanoah@example.com;2706.144317779954
+Davi Lucas Monteiro;Lago Eduarda Moura, 5,Caiçara - Adelaide,05630701 Souza de da Costa / PI;Representante comercial;Financeiro;raquelda-costa@example.org;6320.84849946002
+Thomas Santos;Travessa Melo, 50,São Paulo,08125219 Cardoso de Campos / CE;Caixa;Financeiro;gabrielrezende@example.net;7020.868362432753
+Luna da Luz;Viaduto Joaquim Souza, 67,Vila Jardim Alvorada,40925614 Cardoso da Serra / MS;Corredor de atletismo;Financeiro;juansilveira@example.org;5855.487849018157
+Mirella Gomes;Residencial Luiz Henrique Nascimento,Estrela Do Oriente,40074-994 das Neves / ES;Separador;Financeiro;thiagooliveira@example.com;9213.509668308667
+Erick Barbosa;Passarela Ryan Fogaça, 349,João Pinheiro,28983-135 da Rocha / GO;Naturólogo;Financeiro;ucosta@example.com;5962.089407794644
+Sr. Davi Lucca Ferreira;Área Dias, 65,Parque São Pedro,43783239 Cardoso / RO;Taifeiro;RH;tda-rosa@example.net;3614.1697162829396
+Fernanda Alves;Praça Araújo, 7,São Luiz,42389118 Nogueira / MS;Cortador de cana-de-açucar;TI;cardosoamanda@example.org;5099.532134115627
+Otávio Jesus;Largo de Caldeira, 3,Alto Caiçaras,18338-030 Monteiro / TO;Músico;Financeiro;rbarros@example.org;6637.5105130158045
+Guilherme Castro;Estação Luiz Felipe Viana, 85,Flavio Marques Lisboa,07454538 Cunha da Prata / SP;Engenheiro elétrico;RH;oliveiracecilia@example.org;6388.820381717991
+Davi Luiz Moreira;Residencial de Cardoso, 72,Grajaú,08679-844 Barros do Campo / RN;Degustador;RH;mirellanunes@example.org;6917.965801900449
+Theo Mendes;Rodovia Duarte, 4,Pedreira Padro Lopes,14029455 Pires / RN;Cenotécnico;TI;xda-conceicao@example.net;7734.675399041165
+Gustavo Nunes;Estação da Paz, 87,Lagoinha,62070571 Teixeira das Pedras / RN;Pastilheiro;TI;paraujo@example.com;3645.011643362201
+Vinicius Cunha;Vereda Stella Rocha, 23,Vila São Gabriel Jacui,19622677 Almeida das Pedras / PI;Profissional de linguística;TI;benjamindas-neves@example.net;6920.145402390865
+Letícia Jesus;Chácara Ana Costa, 273,Vila Calafate,76046-574 Sales / AL;Consultor de moda;Financeiro;qalves@example.com;8823.806027991082
+Dr. Miguel Correia;Residencial Rocha, 90,Conjunto Celso Machado,44632-071 Rocha do Norte / CE;Controlador de vôo;Financeiro;ccunha@example.org;7652.869547631899
+Milena da Cruz;Estrada Viana,Virgínia,47773-881 Sales dos Dourados / PB;Cinegrafista;Marketing;juliana41@example.net;7751.9457807463095
+Ana Vitória Almeida;Condomínio Maria Fernanda Ribeiro, 69,Rio Branco,71623-215 da Rocha do Campo / RR;Radialista;RH;cmoreira@example.org;4859.812885546445
+Gabriel Martins;Jardim de Campos,Boa Esperança,03928637 Ramos Verde / RS;Copeiro;Marketing;zda-rocha@example.org;9842.211571160917
+Mirella Gonçalves;Feira de Porto,Maria Tereza,29829880 Pinto / GO;Ferroviário;RH;wdias@example.com;8897.537324001321
+Nicolas Campos;Residencial de Silva,Jardim Alvorada,30088-984 Pereira de Cardoso / DF;Garimpeiro;Financeiro;da-rosavitor-gabriel@example.org;7120.201623688635
+Ana Sophia Silva;Avenida Nina Campos, 46,Buritis,63417223 Moreira das Pedras / RR;Esgrimista;Financeiro;ianalves@example.org;5925.38248267299
+Ana Julia Caldeira;Condomínio de Porto, 272,Guaratã,90916-328 Cardoso Paulista / RS;Garçom;RH;mouralivia@example.org;8919.323577611414
+Ana Novaes;Vale de Pires, 66,Casa Branca,23540-178 Silveira do Oeste / SC;Tenente;TI;davi-luiz93@example.org;4978.3706200883125
+Dra. Bianca Pereira;Rodovia de Aragão, 88,Universitário,73970-658 Castro / GO;Gagsman;Financeiro;vianalivia@example.com;3371.181718155043
+Daniel da Rocha;Trevo Vitor Hugo Fernandes, 8,Pirineus,14838-656 Nogueira do Sul / SP;Taxista;Financeiro;kda-cunha@example.org;3150.6229997393593
+Davi Lucas Nascimento;Quadra Barbosa, 884,Prado,85792-436 Fernandes / MT;Traumatologista;Marketing;viniciusrodrigues@example.org;8482.321017103353
+
+-----------------------------------------------------------------------------------
+
+
